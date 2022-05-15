@@ -8,6 +8,16 @@ export const clearResults = () => {
     elements.searchResPages.innerHTML = '';
 }
 
+export const activeLinkStyle = (id) => {
+    const resArr = [...document.querySelectorAll('.results__link')]
+
+    resArr.forEach(el => el.classList.remove('results__link--active'))
+
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+
+}
+
+
 const convertTitle = (title, limit = 17) => {
     const newTitle = [];
     if(title.length > limit) {
@@ -28,7 +38,7 @@ const convertTitle = (title, limit = 17) => {
 const renderRecipe = (recipe) => {
     const markup = 
     `<li>
-        <a class="results__link results__link--active" href="${recipe.recipe_id}">
+        <a class="results__link --active" href="#${recipe.recipe_id}">
             <figure class="results__fig">
                 <img src="${recipe.image_url}" alt="${recipe.title}">
             </figure>

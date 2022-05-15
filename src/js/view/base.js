@@ -1,9 +1,11 @@
+import Recipe from "../models/Recipe"
+
 export const elements = {
     searchForm: document.querySelector('.search'),
     searchInput: document.querySelector('.search__field'),
     searchResList: document.querySelector('.results__list'),
-    searchResPages: document.querySelector('.results__pages')
-
+    searchResPages: document.querySelector('.results__pages'),
+    Recipe: document.querySelector('.recipe')
 
 
 }

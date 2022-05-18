@@ -47,7 +47,7 @@ const renderRecipe = (recipe) => {
                 <p class="results__author">${recipe.publisher}</p>
             </div>
         </a>
-    </li>`;
+    </li>`
     elements.searchResList.insertAdjacentHTML('beforeend', markup);
 }
 

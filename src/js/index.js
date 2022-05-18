@@ -47,6 +47,13 @@ const controlRecipe = async () => {
         } catch (error) {
             alert('Recipe error')
         }
+
+        state.recipe.parseIngredients();
+
+        // calculate time and searvings
+
+        state.recipe.calcTime();
+        state.recipe.calcServings();
         
 
         clearLoader();
@@ -76,4 +83,16 @@ window.addEventListener('hashchange', () => {
 
 window.addEventListener('load', () =>{
     controlRecipe();
+})
+
+elements.Recipe.addEventListener('click', e => {
+if(e.target.matches('.btn-decrease, .btn-decrease *')){
+    //decrease
+    console.log(' - ')
+
+}else if (e.target.matches('.btn-increase, .btn-increase *')){
+    //increase
+    console.log ('+')
+}
+
 })

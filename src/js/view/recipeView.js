@@ -1,6 +1,29 @@
 import { elements } from "./base";
+import { Fraction } from 'fractional'
+
 
 export const clearRecipe = () => elements.Recipe.innerHTML = '';
+
+const formatCount = count => {
+
+    if(count) {
+        // count 2.5 ===> 2 1/2
+        //count 0.5 ===> 1/2
+        //count = 2 
+        const [int, dec] = count.toString().split('.').map(el => +el);
+
+        if(!dec) return count;
+
+        if(int === 0){
+            const fr = new Fraction(count); // numerator 1,
+            return `${fr.numerator}/${fr.denominator}`; // 1/2
+        }else{
+            const fr = new Fraction(count - int);
+            return `${int} ${fr.numerator}/${fr.denominator}`
+        }
+    }
+    return '?';
+}
 
 const createIngredient = ingredientArgs => 
      `            
@@ -8,7 +31,7 @@ const createIngredient = ingredientArgs =>
         <svg class="recipe__icon">
             <use href="img/icons.svg#icon-check"></use>
         </svg>
-        <div class="recipe__count">${ingredientArgs.count}</div>
+        <div class="recipe__count">${formatCount(ingredientArgs.count)}</div>
         <div class="recipe__ingredient">
             <span class="recipe__unit">${ingredientArgs.unit}</span>
             ${ingredientArgs.ingredient}
@@ -99,6 +122,24 @@ export const renderRecipe = (recipe) =>{
     `
 
     elements.Recipe.insertAdjacentHTML('afterbegin', markup)
+
+
+}
+
+
+export const updateServingIngredient = recipe => {
+    // update servings
+    document.querySelector('.recipe__info-data--people').textContent = recipe.servings;
+
+    // updat eingredients
+
+    const countsElements  = [...document.querySelectorAll('.recipe__count')]
+    
+    countsElements.forEach((el, index) => {
+
+        el.textContent = formatCount(recipe.ingredients[index].count);
+
+    })
 
 
 }

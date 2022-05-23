@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
-    "fractional": "^1.0.0"
+    "fractional": "^1.0.0",
+    "uniq": "^1.0.1",
+    "uniqid": "^5.4.0"
   }
 }

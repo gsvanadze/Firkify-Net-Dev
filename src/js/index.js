@@ -1,8 +1,12 @@
 import Recipe from "./models/Recipe";
 import Search from "./models/search";
+import List from "./models/List";
+import Like from "./models/Like";
 import { clearLoader, elements, renderLoader } from "./view/base";
 import * as searchView from "./view/searchView";
 import * as recipeView from './view/recipeView';
+import * as listView from './view/listView';
+
 
 const state = {};
 window.state = state;
@@ -61,6 +65,40 @@ const controlRecipe = async () => {
     }
 }
 
+// shopping list
+
+const controlList = () => {
+    if(!state.list) state.list = new List();
+
+    listView.clearShoppingList();
+
+// add each ingredient
+    state.recipe.ingredients.forEach(el =>{
+        const item = state.list.addItems(el.count, el.unit, el.ingredient)
+        listView.renderItem(item);
+    })
+}
+
+const controlLike = () => {
+    state.likes = new Like();
+
+    const currentId = state.recipe.id;
+}
+//handle delete and update list item events
+elements.shopping.addEventListener('click', e=> {
+    const id = e.target.closest('.shopping__item').dataset.itemid;
+
+    if(e.target.matches('shopping__delete, .shopping__delete *')){
+        state.list.deleteItem(id);
+        listView.deleteItem(id);
+    }else if(e.target.matches('.shopping__count__input')){
+        //update item
+        const newValue = +e.target.value;
+        state.list.updateItem(id, newValue);
+    }
+
+})
+
 elements.searchForm.addEventListener('submit', (e)=>{
     e.preventDefault();
     controlSearch();
@@ -97,6 +135,13 @@ if(e.target.matches('.btn-decrease, .btn-decrease *')){
     //increase
     state.recipe.updateServingIngredient('inc');
     recipeView.updateServingIngredient(state.recipe);  
+}else if(e.target.matches('.recipe__btn__add, .recipe__btn__add *')){
+    controlList();
+}else if(e.target.matches('.recipe__love, .recipe__love *')){
+    // Like controller
+    controlLike();
+
+
 }
 
 })
